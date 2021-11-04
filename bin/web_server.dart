@@ -26,7 +26,7 @@ import 'package:web_server/ui/components/info_card.dart';
 import 'package:web_server/ui/landing_page_modifier.dart';
 
 const _root = '/';
-const _appPath = '/app';
+const _appPath = '/app/';
 const _anyPathAfter = '<path|.*>';
 
 void main(List<String> arguments) async {
@@ -34,6 +34,27 @@ void main(List<String> arguments) async {
   final landingPageInitial = await res.getIndexHtml();
   final landingPageModifier = LandingPageModifier(landingPageInitial);
 
+  bootstrapPage(landingPageModifier);
+
+  router.mount(_root + 'styles.css', (request) async {
+    final css = await res.getStylesCss();
+    return Response.ok(css, headers: {'Content-Type': 'text/css'});
+  });
+
+  router.mount(
+      _root + res.imagesPath, ShelfVirtualDirectory(res.imagesPath).handler);
+
+  router.mount(_appPath, ShelfVirtualDirectory('web/app/build').handler);
+
+  router.get(
+      _root + _anyPathAfter,
+      (Request request) => Response.ok(landingPageModifier.outerHtml,
+          headers: {'Content-Type': 'text/html'}));
+
+  io.serve(router, 'localhost', 8080);
+}
+
+void bootstrapPage(LandingPageModifier landingPageModifier) {
   landingPageModifier.appendChild(InfoCard(
           title: 'Больше не нужно искать.',
           subtitle:
@@ -66,21 +87,6 @@ void main(List<String> arguments) async {
           childElement: createButton(
               'Посмотреть исходный код', 'https://gitlab.com/Sufflain'))
       .outerHtml);
-
-  router.mount(_root + 'styles.css', (request) async {
-    final css = await res.getStylesCss();
-    return Response.ok(css, headers: {'Content-Type': 'text/css'});
-  });
-
-  router.mount(
-      _root + res.imagesPath, ShelfVirtualDirectory(res.imagesPath).handler);
-
-  router.get(_root + _anyPathAfter, (Request request) async {
-    return Response.ok(landingPageModifier.outerHtml,
-        headers: {'Content-Type': 'text/html'});
-  });
-
-  io.serve(router, 'localhost', 8080);
 }
 
 String createButton(String title, String link) => '''

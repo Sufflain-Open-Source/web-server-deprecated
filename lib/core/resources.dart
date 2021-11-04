@@ -19,7 +19,7 @@ import 'dart:convert';
 
 import 'package:resource_portable/resource.dart';
 
-const _appFolderPath = 'web/app';
+const appFolderPath = 'web/app/build';
 const _publicFolderPath = 'web/public';
 const imagesPath = 'web/app/img';
 
