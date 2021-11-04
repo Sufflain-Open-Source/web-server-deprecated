@@ -6,8 +6,11 @@ environment:
   sdk: ">=2.14.3 <3.0.0"
 
 dependencies:
+  html: ^0.15.0
   resource_portable: ^3.0.0
+  mustache_template: ^2.0.0
   shelf_router: ^1.1.2
+  shelf_virtual_directory: ^3.0.0
 
 dev_dependencies:
   lints: ^1.0.0

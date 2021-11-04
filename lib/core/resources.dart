@@ -15,28 +15,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:web_server/core/resources.dart' as res;
+import 'dart:convert';
 
-import 'package:shelf_router/shelf_router.dart';
-import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as io;
+import 'package:resource_portable/resource.dart';
 
-const _root = '/';
-const _appPath = '/app';
-const _anyPathAfter = '<path|.*>';
+const _appFolderPath = 'web/app';
+const _publicFolderPath = 'web/public';
 
-void main(List<String> arguments) {
-  final router = Router();
-
-  router.mount(_root + 'styles.css', (request) async {
-    final css = await res.getStylesCss();
-    return Response.ok(css, headers: {'Content-Type': 'text/css'});
-  });
-
-  router.get(_root + _anyPathAfter, (Request request) async {
-    final html = await res.getIndexHtml();
-    return Response.ok(html, headers: {'Content-Type': 'text/html'});
-  });
-
-  io.serve(router, 'localhost', 8080);
+Future<String> getIndexHtml() async {
+  final resource = _getResourceForPath(_publicFolderPath + '/index.html');
+  return await resource.readAsString(encoding: utf8);
 }
+
+Future<String> getStylesCss() async {
+  final resource = _getResourceForPath(_publicFolderPath + '/styles.css');
+  return await resource.readAsString(encoding: utf8);
+}
+
+Resource _getResourceForPath(String path) => Resource(path);
