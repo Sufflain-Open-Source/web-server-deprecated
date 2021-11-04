@@ -1,0 +1,13 @@
+name: web_server
+description: A web server for Sufflain
+version: 1.0.0
+
+environment:
+  sdk: ">=2.14.3 <3.0.0"
+
+dependencies:
+  resource_portable: ^3.0.0
+  shelf_router: ^1.1.2
+
+dev_dependencies:
+  lints: ^1.0.0
