@@ -19,9 +19,9 @@ import 'dart:convert';
 
 import 'package:resource_portable/resource.dart';
 
-const appFolderPath = 'web/app/build';
+const appFolderPath = 'web/compiled';
 const _publicFolderPath = 'web/public';
-const imagesPath = 'web/app/img';
+const imagesPath = 'web/img';
 
 Future<String> getIndexHtml() async {
   final resource = _getResourceForPath(_publicFolderPath + '/index.html');
@@ -29,7 +29,7 @@ Future<String> getIndexHtml() async {
 }
 
 Future<String> getStylesCss() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/styles.css');
+  final resource = _getResourceForPath(_publicFolderPath + '/landing-styles.css');
   return await resource.readAsString(encoding: utf8);
 }
 

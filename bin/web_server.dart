@@ -19,6 +19,8 @@ import 'package:web_server/ui/components/button.dart';
 import 'package:shelf_virtual_directory/shelf_virtual_directory.dart';
 import 'package:web_server/core/resources.dart' as res;
 
+import 'dart:io' as dart_io;
+import 'package:args/args.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
@@ -29,8 +31,13 @@ import 'package:web_server/ui/landing_page_modifier.dart';
 const _root = '/';
 const _appPath = '/app';
 
+const _addressKey = 'address';
+const _portKey = 'port';
+
 void main(List<String> arguments) async {
-  final port = getPortFromArgument(arguments);
+  final parsedArgs = parseArgumentsAndBindToActions(arguments);
+  final address = parsedArgs[_addressKey];
+  final port = parsedArgs[_portKey];
   final router = Router();
   final landingPageInitial = await res.getIndexHtml();
   final landingPageModifier = LandingPageModifier(landingPageInitial);
@@ -52,7 +59,50 @@ void main(List<String> arguments) async {
       (Request request) => Response.ok(landingPageModifier.outerHtml,
           headers: {'Content-Type': 'text/html'}));
 
-  io.serve(router, 'localhost', port);
+  io
+      .serve(router, address, port)
+      .then((server) => print('Serving on ${server.address}:${server.port}'));
+}
+
+Map<String, dynamic> parseArgumentsAndBindToActions(List<String> arguments) {
+  final parsedValues = <String, dynamic>{};
+  final parser = ArgParser();
+
+  parser.addOption('address', abbr: 'a', help: 'Set the web server IP address.',
+      callback: (addr) {
+    parsedValues[_addressKey] = addr ?? '127.0.0.1';
+  });
+
+  parser.addOption('port', abbr: 'p', help: 'Set the web server TCP port.',
+      callback: (port) {
+    const defaultPort = '80';
+    parsedValues[_portKey] = int.tryParse(port ?? defaultPort) as int;
+  });
+
+  parser.addFlag('help', abbr: 'h', help: 'Show help.',
+      callback: (bool isFlagEnabled) {
+    if (isFlagEnabled) {
+      final helpMessage =
+          '''
+A Sufflain's web server application.
+
+Usage: sflw <option> [arguments]
+
+Options:
+${parser.usage}
+
+NOTE: The default IP address is 127.0.0.1, and the default TCP port number is 80.
+      ''';
+
+      print(helpMessage);
+
+      dart_io.exit(0);
+    }
+  }, negatable: false);
+
+  parser.parse(arguments);
+
+  return parsedValues;
 }
 
 void bootstrapPage(LandingPageModifier landingPageModifier) {
@@ -87,13 +137,6 @@ void bootstrapPage(LandingPageModifier landingPageModifier) {
           childElement: makeButton(
               'Посмотреть исходный код', 'https://gitlab.com/Sufflain'))
       .outerHtml);
-}
-
-int getPortFromArgument(List<String> args) {
-  int result = 80;
-  args.isNotEmpty ? result = int.tryParse(args[0]) as int : result;
-
-  return result;
 }
 
 String createImageElement(String fileName) =>
