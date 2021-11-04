@@ -15,28 +15,77 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:shelf_virtual_directory/shelf_virtual_directory.dart';
 import 'package:web_server/core/resources.dart' as res;
 
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
+import 'package:web_server/ui/components/image.dart';
+import 'package:web_server/ui/components/info_card.dart';
+import 'package:web_server/ui/landing_page_modifier.dart';
 
 const _root = '/';
 const _appPath = '/app';
 const _anyPathAfter = '<path|.*>';
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
   final router = Router();
+  final landingPageInitial = await res.getIndexHtml();
+  final landingPageModifier = LandingPageModifier(landingPageInitial);
+
+  landingPageModifier.appendChild(InfoCard(
+          title: 'Больше не нужно искать.',
+          subtitle:
+              'Расписание разделено по группам.<br>Никакой лишней информации.',
+          childElement:
+              createImageElement('timetable-25-oct-mobile-edited.png'))
+      .outerHtml);
+
+  landingPageModifier.appendChild(InfoCard(
+          title: 'Всегда под рукой.',
+          subtitle: 'Разработано с рассчётом на мобильные устройства.',
+          childElement: createImageElement('main-mobile.png'))
+      .outerHtml);
+
+  landingPageModifier.appendChild(InfoCard(
+          title: 'Зачем?',
+          subtitle:
+              'Мы устали от:<br>- огромных таблиц с перемешанными расписаниями<br>- неадаптивного интерфейса',
+          childElement: createImageElement('college-timetable.png'))
+      .outerHtml);
+
+  landingPageModifier.appendChild(InfoCard(
+          title: 'Есть вопросы/предложения?',
+          childElement:
+              createButton('Написать нам', 'mailto:crt0r.9@yahoo.com'))
+      .outerHtml);
+
+  landingPageModifier.appendChild(InfoCard(
+          title: 'Мы за Open Source.',
+          childElement: createButton(
+              'Посмотреть исходный код', 'https://gitlab.com/Sufflain'))
+      .outerHtml);
 
   router.mount(_root + 'styles.css', (request) async {
     final css = await res.getStylesCss();
     return Response.ok(css, headers: {'Content-Type': 'text/css'});
   });
 
+  router.mount(
+      _root + res.imagesPath, ShelfVirtualDirectory(res.imagesPath).handler);
+
   router.get(_root + _anyPathAfter, (Request request) async {
-    final html = await res.getIndexHtml();
-    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+    return Response.ok(landingPageModifier.outerHtml,
+        headers: {'Content-Type': 'text/html'});
   });
 
   io.serve(router, 'localhost', 8080);
 }
+
+String createButton(String title, String link) => '''
+  <a class="button" href="$link">$title</a>
+  ''';
+
+String createImageElement(String fileName) =>
+    Image(res.imagesPath + '/$fileName').outerHtml;

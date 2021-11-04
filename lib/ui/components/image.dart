@@ -15,22 +15,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'dart:convert';
+class Image {
+  Image(this.path);
 
-import 'package:resource_portable/resource.dart';
+  final String path;
 
-const _appFolderPath = 'web/app';
-const _publicFolderPath = 'web/public';
-const imagesPath = 'web/app/img';
-
-Future<String> getIndexHtml() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/index.html');
-  return await resource.readAsString(encoding: utf8);
+  String get outerHtml => '''
+  <img src="$path" />
+  ''';
 }
-
-Future<String> getStylesCss() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/styles.css');
-  return await resource.readAsString(encoding: utf8);
-}
-
-Resource _getResourceForPath(String path) => Resource(path);

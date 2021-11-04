@@ -15,22 +15,28 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'dart:convert';
+import 'package:mustache_template/mustache.dart';
 
-import 'package:resource_portable/resource.dart';
+class InfoCard {
+  InfoCard(
+      {required this.title, this.subtitle = '', required this.childElement});
 
-const _appFolderPath = 'web/app';
-const _publicFolderPath = 'web/public';
-const imagesPath = 'web/app/img';
+  final String title;
+  final String subtitle;
+  final String childElement;
 
-Future<String> getIndexHtml() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/index.html');
-  return await resource.readAsString(encoding: utf8);
+  String get outerHtml {
+    final _outerHtml = '''
+<div class="info-card">
+    <p class="info-card-title">$title</p>
+    ${() {
+      return subtitle.isNotEmpty
+          ? '<p class="info-card-subtitle">$subtitle</p>'
+          : '';
+    }()}
+    $childElement
+</div>''';
+
+    return Template(_outerHtml).renderString({});
+  }
 }
-
-Future<String> getStylesCss() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/styles.css');
-  return await resource.readAsString(encoding: utf8);
-}
-
-Resource _getResourceForPath(String path) => Resource(path);

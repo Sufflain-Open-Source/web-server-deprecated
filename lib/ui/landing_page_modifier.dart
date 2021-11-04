@@ -15,22 +15,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'dart:convert';
+import 'package:html/parser.dart';
 
-import 'package:resource_portable/resource.dart';
+class LandingPageModifier {
+  LandingPageModifier(this._initialHtml);
 
-const _appFolderPath = 'web/app';
-const _publicFolderPath = 'web/public';
-const imagesPath = 'web/app/img';
+  String _initialHtml;
 
-Future<String> getIndexHtml() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/index.html');
-  return await resource.readAsString(encoding: utf8);
+  void appendChild(String html) {
+    final document = parse(_initialHtml);
+    final infoCardsSection = document.getElementById('info-cards');
+    final innerHtml = infoCardsSection?.innerHtml ?? '';
+    infoCardsSection?.innerHtml = innerHtml + html;
+
+    _initialHtml = document.outerHtml;
+  }
+
+  String get outerHtml => _initialHtml;
 }
-
-Future<String> getStylesCss() async {
-  final resource = _getResourceForPath(_publicFolderPath + '/styles.css');
-  return await resource.readAsString(encoding: utf8);
-}
-
-Resource _getResourceForPath(String path) => Resource(path);
