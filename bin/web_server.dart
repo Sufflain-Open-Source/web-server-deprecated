@@ -26,8 +26,7 @@ import 'package:web_server/ui/components/info_card.dart';
 import 'package:web_server/ui/landing_page_modifier.dart';
 
 const _root = '/';
-const _appPath = '/app/';
-const _anyPathAfter = '<path|.*>';
+const _appPath = '/app';
 
 void main(List<String> arguments) async {
   final router = Router();
@@ -47,7 +46,7 @@ void main(List<String> arguments) async {
   router.mount(_appPath, ShelfVirtualDirectory('web/app/build').handler);
 
   router.get(
-      _root + _anyPathAfter,
+      _root,
       (Request request) => Response.ok(landingPageModifier.outerHtml,
           headers: {'Content-Type': 'text/html'}));
 
