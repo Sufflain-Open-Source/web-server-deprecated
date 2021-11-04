@@ -15,6 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:web_server/ui/components/button.dart';
 import 'package:shelf_virtual_directory/shelf_virtual_directory.dart';
 import 'package:web_server/core/resources.dart' as res;
 
@@ -44,7 +45,7 @@ void main(List<String> arguments) async {
   router.mount(
       _root + res.imagesPath, ShelfVirtualDirectory(res.imagesPath).handler);
 
-  router.mount(_appPath, ShelfVirtualDirectory('web/app/build').handler);
+  router.mount(_appPath, ShelfVirtualDirectory(res.appFolderPath).handler);
 
   router.get(
       _root,
@@ -78,13 +79,12 @@ void bootstrapPage(LandingPageModifier landingPageModifier) {
 
   landingPageModifier.appendChild(InfoCard(
           title: 'Есть вопросы/предложения?',
-          childElement:
-              createButton('Написать нам', 'mailto:crt0r.9@yahoo.com'))
+          childElement: makeButton('Написать нам', 'mailto:crt0r.9@yahoo.com'))
       .outerHtml);
 
   landingPageModifier.appendChild(InfoCard(
           title: 'Мы за Open Source.',
-          childElement: createButton(
+          childElement: makeButton(
               'Посмотреть исходный код', 'https://gitlab.com/Sufflain'))
       .outerHtml);
 }
@@ -95,10 +95,6 @@ int getPortFromArgument(List<String> args) {
 
   return result;
 }
-
-String createButton(String title, String link) => '''
-  <a class="button" href="$link">$title</a>
-  ''';
 
 String createImageElement(String fileName) =>
     Image(res.imagesPath + '/$fileName').outerHtml;

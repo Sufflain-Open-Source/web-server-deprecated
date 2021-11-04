@@ -15,8 +15,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:mustache_template/mustache.dart';
-
 class InfoCard {
   InfoCard(
       {required this.title, this.subtitle = '', required this.childElement});
@@ -37,6 +35,6 @@ class InfoCard {
     $childElement
 </div>''';
 
-    return Template(_outerHtml).renderString({});
+    return _outerHtml;
   }
 }
