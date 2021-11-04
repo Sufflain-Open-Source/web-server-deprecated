@@ -29,6 +29,7 @@ const _root = '/';
 const _appPath = '/app';
 
 void main(List<String> arguments) async {
+  final port = getPortFromArgument(arguments);
   final router = Router();
   final landingPageInitial = await res.getIndexHtml();
   final landingPageModifier = LandingPageModifier(landingPageInitial);
@@ -50,7 +51,7 @@ void main(List<String> arguments) async {
       (Request request) => Response.ok(landingPageModifier.outerHtml,
           headers: {'Content-Type': 'text/html'}));
 
-  io.serve(router, 'localhost', 8080);
+  io.serve(router, 'localhost', port);
 }
 
 void bootstrapPage(LandingPageModifier landingPageModifier) {
@@ -86,6 +87,13 @@ void bootstrapPage(LandingPageModifier landingPageModifier) {
           childElement: createButton(
               'Посмотреть исходный код', 'https://gitlab.com/Sufflain'))
       .outerHtml);
+}
+
+int getPortFromArgument(List<String> args) {
+  int result = 80;
+  args.isNotEmpty ? result = int.tryParse(args[0]) as int : result;
+
+  return result;
 }
 
 String createButton(String title, String link) => '''
