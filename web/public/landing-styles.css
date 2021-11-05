@@ -36,7 +36,7 @@ main#root {
     display: grid;
     place-items: center;
     font-family: Roboto;
-    background-color: var(--light-blue);
+    background-color: var(--medium-blue);
 }
 
 header {
@@ -106,4 +106,60 @@ section#main-action > p {
 
 section#main-action > a.button {
     margin-top: 172px;
+}
+
+section#info-cards {
+    margin-top: 198px;
+}
+
+div.info-card {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    min-width: 800px;
+    min-height: 1083px;
+    background-color: var(--light-blue);
+    border-radius: 3px;
+    margin-bottom: 100px;
+    box-shadow: var(--default-shadow-down);
+}
+
+div.info-card:nth-child(3) > p.info-card-subtitle {
+    text-align: left;
+}
+
+div.info-card:nth-last-child(1), 
+div.info-card:nth-last-child(2) {
+    min-height: 347px;
+}
+
+div.info-card:nth-last-child(1) > a.button, 
+div.info-card:nth-last-child(2) > a.button {
+    margin-top: 102px;
+    margin-bottom: 66px;
+}
+
+p.info-card-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--dark-red);
+    margin-top: 66px;
+}
+
+p.info-card-subtitle {
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+    color: var(--dark-red);
+    margin-top: 42px;
+    margin-bottom: 105px;
+}
+
+div.info-card > img {
+    width: 380px;
+    height: 675px;
+    margin-bottom: 120px;
+    border-radius: 3px;
 }
