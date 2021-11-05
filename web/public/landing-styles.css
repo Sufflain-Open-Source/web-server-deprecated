@@ -30,14 +30,14 @@
 
 body {
     margin: 0;
+    background-color: var(--medium-blue);   
 }
 
 main#root {
     display: grid;
     place-items: center;
     font-family: Roboto;
-    background-color: var(--medium-blue);    
-    padding: 0 140px 100px;
+    padding-bottom: 100px;
 }
 
 header {
@@ -124,6 +124,8 @@ div.info-card {
     border-radius: 3px;
     margin-bottom: 100px;
     box-shadow: var(--default-shadow-down);
+    margin-left: 140px;
+    margin-right: 140px;
 }
 
 div.info-card:nth-child(3) > p.info-card-subtitle {
