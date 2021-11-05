@@ -26,18 +26,24 @@
     --dark-blue: #84cfff;
 
     --default-shadow-down: 0 3px 6px #00000029;
+
+    --default-font-size: 18px;
+}
+
+html {
+    font-size: var(--default-font-size);
 }
 
 body {
     margin: 0;
-    background-color: var(--medium-blue);   
+    background-color: var(--medium-blue);
 }
 
 main#root {
     display: grid;
     place-items: center;
     font-family: Roboto;
-    padding-bottom: 100px;
+    padding: 0 1rem 100px 1rem;
 }
 
 header {
@@ -50,16 +56,16 @@ header {
 
 a.button {
     display: grid;
-    width: 392px;
-    height: 80px;
+    width: 16.3rem;
+    height: 3.3rem;
     place-items: center;
     background-color: var(--medium-red);
     box-shadow: var(--default-shadow-down);
     color: var(--medium-blue);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 0.4rem;
     transition: background-color 300ms, transform 100ms, shadow 100ms;
 }
 
@@ -74,12 +80,12 @@ a.button:active {
 div#logo {
     background-image: url('web/img/sufflain-colored-outline.svg');
     background-size: cover;
-    width: 79.46px;
-    height: 129.18px;
+    width: 3.3rem;
+    height: 5.38rem;
 }
 
 div#project-name {
-    font-size: 34px;
+    font-size: 1.4rem;
     font-weight: 300;
     color: var(--dark-red);
 }
@@ -94,14 +100,14 @@ section#main-action {
 
 section#main-action > h1 {
     font-weight: 700;
-    font-size: 48px;
+    font-size: 2rem;
     margin-top: 0;
     margin-bottom: 39px;
 }
 
 section#main-action > p {
     font-weight: 400;
-    font-size: 24px;
+    font-size: 1rem;
     margin: 0;
 }
 
@@ -115,50 +121,57 @@ section#info-cards {
 }
 
 div.info-card {
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-    min-width: 800px;
+    display: grid;
+    justify-items: center;
+    max-width: 800px;
     min-height: 1083px;
     background-color: var(--light-blue);
     border-radius: 3px;
     margin-bottom: 100px;
     box-shadow: var(--default-shadow-down);
-    margin-left: 140px;
-    margin-right: 140px;
+    padding: 0 1.5rem 0 1.5rem;
 }
 
-div.info-card:nth-child(3) > p.info-card-subtitle {
+div.info-card-text-content {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: start;
+    margin-top: 2.75rem;
+}
+
+div.info-card:nth-child(3) > div.info-card-text-content > p.info-card-subtitle {
     text-align: left;
 }
 
 div.info-card:nth-last-child(1), 
 div.info-card:nth-last-child(2) {
-    min-height: 347px;
+    min-height: 14.5rem;
 }
 
 div.info-card:nth-last-child(1) > a.button, 
 div.info-card:nth-last-child(2) > a.button {
-    margin-top: 102px;
-    margin-bottom: 66px;
+    /* margin-top: 4.25rem; */
+    margin-bottom: 2.75rem;
 }
 
 p.info-card-title {
     margin: 0;
     font-weight: 700;
-    font-size: 34px;
+    font-size: 1.4rem;
     color: var(--dark-red);
-    margin-top: 66px;
+    margin-top: 0.36rem;
+    text-align: center;
 }
 
 p.info-card-subtitle {
     margin: 0;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 1rem;
     text-align: center;
     color: var(--dark-red);
-    margin-top: 42px;
-    margin-bottom: 105px;
+    margin-top: 1.75rem;
+    margin-bottom: 4.48rem;
 }
 
 div.info-card > img {
@@ -172,5 +185,11 @@ footer > p {
     text-align: center;
     color: var(--dark-red);
     font-weight: 400;
-    font-size: 24px;
+    font-size: 1rem;
+}
+
+@media (max-width: 1087px) {
+    html {
+        font-size: calc(var(--default-font-size) * 2);
+    }
 }

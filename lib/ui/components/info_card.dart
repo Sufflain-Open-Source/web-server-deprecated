@@ -26,13 +26,15 @@ class InfoCard {
   String get outerHtml {
     final _outerHtml = '''
 <div class="info-card">
-    <p class="info-card-title">$title</p>
-    ${() {
-      return subtitle.isNotEmpty
-          ? '<p class="info-card-subtitle">$subtitle</p>'
-          : '';
-    }()}
-    $childElement
+  <div class="info-card-text-content">
+      <p class="info-card-title">$title</p>
+      ${() {
+        return subtitle.isNotEmpty
+            ? '<p class="info-card-subtitle">$subtitle</p>'
+            : '';
+      }()}
+  </div>
+  $childElement
 </div>''';
 
     return _outerHtml;
