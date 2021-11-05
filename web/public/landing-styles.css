@@ -113,6 +113,12 @@ section#main-action > p {
 
 section#main-action > a.button {
     margin-top: 172px;
+    position: relative;
+}
+
+section#main-action > img#demo-image {
+    margin: 172px 0 172px 0;
+    max-width: 100%;
 }
 
 section#info-cards {
