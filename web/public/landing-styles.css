@@ -36,7 +36,8 @@ main#root {
     display: grid;
     place-items: center;
     font-family: Roboto;
-    background-color: var(--medium-blue);
+    background-color: var(--medium-blue);    
+    padding: 0 140px 100px;
 }
 
 header {
@@ -110,6 +111,7 @@ section#main-action > a.button {
 
 section#info-cards {
     margin-top: 198px;
+    margin-bottom: 200px;
 }
 
 div.info-card {
@@ -162,4 +164,11 @@ div.info-card > img {
     height: 675px;
     margin-bottom: 120px;
     border-radius: 3px;
+}
+
+footer > p {
+    text-align: center;
+    color: var(--dark-red);
+    font-weight: 400;
+    font-size: 24px;
 }
