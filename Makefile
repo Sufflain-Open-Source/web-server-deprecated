@@ -13,6 +13,7 @@ $(BUILD_DIR):
 web/img:
 	mkdir $@
 	cp web/app/img/* $@/
+	cp web/app/build/img/sufflain-colored-outline.svg web/img/
 
 web/$(COMPILED_DIR): web/app/build
 	mkdir web/$(COMPILED_DIR)

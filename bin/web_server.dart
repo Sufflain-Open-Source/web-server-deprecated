@@ -44,7 +44,7 @@ void main(List<String> arguments) async {
 
   bootstrapPage(landingPageModifier);
 
-  router.mount(_root + 'styles.css', (request) async {
+  router.mount(_root + 'landing-styles.css', (request) async {
     final css = await res.getStylesCss();
     return Response.ok(css, headers: {'Content-Type': 'text/css'});
   });
@@ -82,8 +82,7 @@ Map<String, dynamic> parseArgumentsAndBindToActions(List<String> arguments) {
   parser.addFlag('help', abbr: 'h', help: 'Show help.',
       callback: (bool isFlagEnabled) {
     if (isFlagEnabled) {
-      final helpMessage =
-          '''
+      final helpMessage = '''
 A Sufflain's web server application.
 
 Usage: sflw <option> [arguments]

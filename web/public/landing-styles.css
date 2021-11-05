@@ -15,3 +15,95 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    --light-red: #fe8599;
+    --medium-red: #fe4466;
+    --dark-red: #773c62;
+    --light-blue: #eafeff;
+    --medium-blue: #c6f5fe;
+    --dark-blue: #84cfff;
+
+    --default-shadow-down: 0 3px 6px #00000029;
+}
+
+body {
+    margin: 0;
+}
+
+main#root {
+    display: grid;
+    place-items: center;
+    font-family: Roboto;
+    background-color: var(--light-blue);
+}
+
+header {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 23px;
+    align-items: center;
+    margin-top: 41px;
+}
+
+a.button {
+    display: grid;
+    width: 392px;
+    height: 80px;
+    place-items: center;
+    background-color: var(--medium-red);
+    box-shadow: var(--default-shadow-down);
+    color: var(--medium-blue);
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 300ms, transform 100ms, shadow 100ms;
+}
+
+a.button:hover {
+    transform: scale(1.1);
+}
+
+a.button:active {
+    background-color: var(--dark-red);
+}
+
+div#logo {
+    background-image: url('web/img/sufflain-colored-outline.svg');
+    background-size: cover;
+    width: 79.46px;
+    height: 129.18px;
+}
+
+div#project-name {
+    font-size: 34px;
+    font-weight: 300;
+    color: var(--dark-red);
+}
+
+section#main-action {
+    text-align: center;
+    color: var(--dark-red);
+    display: grid;
+    place-items: center;
+    margin-top: 172px;
+}
+
+section#main-action > h1 {
+    font-weight: 700;
+    font-size: 48px;
+    margin-top: 0;
+    margin-bottom: 39px;
+}
+
+section#main-action > p {
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0;
+}
+
+section#main-action > a.button {
+    margin-top: 172px;
+}
