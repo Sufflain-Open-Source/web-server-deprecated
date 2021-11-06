@@ -206,6 +206,10 @@ footer > p {
         width: 28.8rem;
         height: 100vh;
     }
+
+    section#main-action {
+        padding: 0 5rem 0 5rem;
+    }
 }
 
 @media (max-width: 1087px) {
@@ -213,7 +217,7 @@ footer > p {
         font-size: calc(var(--default-font-size) * 2);
     }
 
-    section#main-action > div#demo-image {
+    div#demo-image {
         margin: 172px 0 172px 0;
         width: 100%;
         padding-top: 70%;
