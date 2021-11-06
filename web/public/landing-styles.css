@@ -50,7 +50,7 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-top: 41px;
+    padding-top: 1.71rem;
 }
 
 header > div#logo {
@@ -98,7 +98,7 @@ section#main-action {
     color: var(--dark-red);
     display: grid;
     place-items: center;
-    margin-top: 172px;
+    margin-top: 7.2rem;
     padding: 0 1rem 100px 1rem;
 }
 
@@ -116,8 +116,26 @@ section#main-action > p {
 }
 
 section#main-action > a.button {
-    margin-top: 172px;
+    margin-top: 7.2rem;
     position: relative;
+}
+
+a#learn-more-button {    
+    text-decoration: none;
+    color: var(--dark-red);
+    position: relative;
+    display: inline-block;
+    margin-top: 7.2rem;
+}
+
+a#learn-more-button::after {
+    display: flex;
+    content: '▼';
+    color: var(--dark-red);
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    margin-left: calc(-1rem / 2);
 }
 
 section#info-cards {
@@ -223,5 +241,13 @@ footer > p {
         padding-top: 70%;
         background-image: url(web/img/sufflain-demo.jpg);
         background-size: cover;
+    }
+    
+    a#learn-more-button {
+        /* --- Remove button on mobile screens. --- */
+        position: absolute;
+        visibility: hidden;
+        z-index: -1;
+        /* ------ */
     }
 }
