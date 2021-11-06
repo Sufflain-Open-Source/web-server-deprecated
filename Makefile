@@ -20,8 +20,8 @@ web/$(COMPILED_DIR): web/app/build
 	mkdir web/$(COMPILED_DIR)
 	cp -r ./web/app/build/* ./web/$(COMPILED_DIR)
 
-web/app/build:
-	web/app/build/build.sh
+web/app/build:	
+	cd web/app && dart pub get && ./build.sh
 
 clean:
 	if [ -d "$(BUILD_DIR)" ]; then\
@@ -34,4 +34,8 @@ clean:
 
 	if [ -d "web/img" ]; then\
 	 rm -r web/img ; \
+	fi
+
+	if [ -d "web/app/build" ]; then\
+	 rm -r web/app/build ; \
 	fi
