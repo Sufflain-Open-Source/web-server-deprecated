@@ -14,7 +14,7 @@ web/img:
 	mkdir $@
 	cp web/app/img/* $@/
 	cp web/app/build/img/sufflain-colored-outline.svg web/img/
-	cp demo/* web/img/
+	cp img/* web/img/
 
 web/$(COMPILED_DIR): web/app/build
 	mkdir web/$(COMPILED_DIR)
