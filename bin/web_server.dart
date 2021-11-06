@@ -110,20 +110,20 @@ void bootstrapPage(LandingPageModifier landingPageModifier) {
           subtitle:
               'Расписание разделено по группам.<br>Никакой лишней информации.',
           childElement:
-              createImageElement('timetable-25-oct-mobile-edited.png'))
+              createImageElement('timetable-25-oct-mobile-edited.png', 'Sufflain screenshot: timetable'))
       .outerHtml);
 
   landingPageModifier.appendChild(InfoCard(
           title: 'Всегда под рукой.',
           subtitle: 'Разработано с рассчётом на мобильные устройства.',
-          childElement: createImageElement('main-mobile.png'))
+          childElement: createImageElement('main-mobile.png', 'Sufflain screenshot: main page'))
       .outerHtml);
 
   landingPageModifier.appendChild(InfoCard(
           title: 'Зачем?',
           subtitle:
               'Мы устали от:<br>- огромных таблиц с перемешанными расписаниями<br>- неадаптивного интерфейса',
-          childElement: createImageElement('college-timetable.png'))
+          childElement: createImageElement('college-timetable.png', 'College site screenshot'))
       .outerHtml);
 
   landingPageModifier.appendChild(InfoCard(
@@ -138,5 +138,5 @@ void bootstrapPage(LandingPageModifier landingPageModifier) {
       .outerHtml);
 }
 
-String createImageElement(String fileName) =>
-    Image(res.imagesPath + '/$fileName').outerHtml;
+String createImageElement(String fileName, String alt) =>
+    Image(res.imagesPath + '/$fileName', alt).outerHtml;

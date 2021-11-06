@@ -16,11 +16,12 @@
 */
 
 class Image {
-  Image(this.path);
+  Image(this.path, this.alt);
 
   final String path;
+  final String alt;
 
   String get outerHtml => '''
-  <img src="$path" />
+  <img alt="$alt" src="$path" />
   ''';
 }
