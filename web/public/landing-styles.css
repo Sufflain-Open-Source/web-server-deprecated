@@ -99,15 +99,16 @@ section#main-action {
     color: var(--dark-red);
     display: grid;
     place-items: center;
-    margin-top: 7.2rem;
-    padding: 0 1rem 100px 1rem;
+    margin-top: 15.8vh;
+    /* margin-top: 7.2rem; 100px*/
+    padding: 0 1rem 9.3vh 1rem;
 }
 
 section#main-action > h1 {
     font-weight: 700;
     font-size: 2rem;
     margin-top: 0;
-    margin-bottom: 39px;
+    margin-bottom: 3.61vh/*39px;*/
 }
 
 section#main-action > p {
@@ -117,7 +118,7 @@ section#main-action > p {
 }
 
 section#main-action > a.button {
-    margin-top: 7.2rem;
+    margin-top: 15.8vh;/*7.2rem;*/
     position: relative;
 }
 
@@ -126,7 +127,7 @@ a#learn-more-button {
     color: var(--dark-red);
     position: relative;
     display: inline-block;
-    margin-top: 7.2rem;
+    margin-top: 15.8vh/*7.2rem;*/
 }
 
 a#learn-more-button::after {
@@ -216,6 +217,7 @@ footer > p {
     div.cover {
         background-image: url(web/img/sufflain-demo-stretched.jpg);
         background-size: cover;
+        background-position: right;
         width: 100%;
         height: 100vh;
     }
