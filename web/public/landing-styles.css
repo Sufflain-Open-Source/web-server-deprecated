@@ -122,7 +122,7 @@ section#main-action > a.button {
     position: relative;
 }
 
-a#learn-more-button {    
+a#learn-more-button, a#swipe-to-learn-more {    
     text-decoration: none;
     color: var(--dark-red);
     position: relative;
@@ -230,6 +230,16 @@ footer > p {
 
     section#main-action {
         padding: 0 5rem 0 5rem;
+    }
+}
+
+@media (min-width: 1088px) {
+    a#swipe-to-learn-more {
+        /* --- Remove on desktop screens. --- */
+        position: absolute;
+        visibility: hidden;
+        z-index: -1;
+        /* ------ */
     }
 }
 
