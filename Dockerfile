@@ -6,6 +6,8 @@ RUN apt update && \
     sh -c 'wget -qO- https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list' && \
     apt update && apt install -y dart make
 
+RUN dart pub global activate webdev
+
 WORKDIR /app
 COPY . .
 
@@ -18,4 +20,4 @@ COPY --from=build /app/web /web
 
 EXPOSE 80
 
-ENTRYPOINT [ "/build/sflw" , "-a10.0.0.2"]
+ENTRYPOINT [ "/build/sflw" , "-a0.0.0.0"]
