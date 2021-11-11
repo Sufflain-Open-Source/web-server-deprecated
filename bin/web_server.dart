@@ -22,7 +22,7 @@ import 'package:web_server/core/resources.dart' as res;
 import 'dart:io' as dart_io;
 import 'package:args/args.dart';
 import 'package:shelf_router/shelf_router.dart';
-import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:web_server/ui/components/image.dart';
 import 'package:web_server/ui/components/info_card.dart';
@@ -41,6 +41,8 @@ const _addressKey = 'address';
 const _portKey = 'port';
 
 void main(List<String> arguments) async {
+  final shelf.Handler handler;
+
   final parsedArgs = _parseArgumentsAndBindToActions(arguments);
   final address = parsedArgs[_addressKey];
   final port = parsedArgs[_portKey];
@@ -48,11 +50,21 @@ void main(List<String> arguments) async {
   final landingPageInitial = await res.getIndexHtml();
   final landingPageModifier = LandingPageModifier(landingPageInitial);
 
+  final appendAppPathTrailingSlashIfNeeded =
+      shelf.createMiddleware(requestHandler: (shelf.Request request) {
+    final initialPath = request.requestedUri.path;
+    final newPath = '$_appPath/';
+
+    if (initialPath == _appPath) {
+      return shelf.Response.movedPermanently(newPath);
+    }
+  });
+
   _bootstrapPage(landingPageModifier);
 
   router.mount(_root + 'landing-styles.css', (request) async {
     final css = await res.getStylesCss();
-    return Response.ok(css, headers: {'Content-Type': 'text/css'});
+    return shelf.Response.ok(css, headers: {'Content-Type': 'text/css'});
   });
 
   router.mount(
@@ -62,11 +74,16 @@ void main(List<String> arguments) async {
 
   router.get(
       _root,
-      (_) => Response.ok(landingPageModifier.outerHtml,
+      (_) => shelf.Response.ok(landingPageModifier.outerHtml,
           headers: {'Content-Type': 'text/html'}));
 
+  handler = shelf.Pipeline()
+      .addMiddleware(shelf.logRequests())
+      .addMiddleware(appendAppPathTrailingSlashIfNeeded)
+      .addHandler(router);
+
   try {
-    final server = await io.serve(router, address, port);
+    final server = await io.serve(handler, address, port);
 
     print('Serving on ${server.address}:${server.port}');
   } catch (e) {
