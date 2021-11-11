@@ -40,6 +40,8 @@ const _appPath = '/app';
 const _addressKey = 'address';
 const _portKey = 'port';
 
+bool _isHelpFlagEnabled = false;
+
 void main(List<String> arguments) async {
   final shelf.Handler handler;
 
@@ -100,6 +102,19 @@ Map<String, dynamic> _parseArgumentsAndBindToActions(List<String> arguments) {
   final parsedValues = <String, dynamic>{};
   final parser = ArgParser();
 
+  parser.addFlag('help', abbr: 'h', help: 'Show help.',
+      callback: (bool isFlagEnabled) {
+    _isHelpFlagEnabled = isFlagEnabled;
+
+    if (_isHelpFlagEnabled) {
+      final helpMessage = _generateHelpMessage(parser.usage);
+
+      print(helpMessage);
+
+      dart_io.exit(0);
+    }
+  }, negatable: false);
+
   parser.addOption('address', abbr: 'a', help: 'Set the web server IP address.',
       callback: (addr) {
     parsedValues[_addressKey] =
@@ -112,17 +127,6 @@ Map<String, dynamic> _parseArgumentsAndBindToActions(List<String> arguments) {
         _notifyUseDefault('TCP port', _defaultTcpPort);
   });
 
-  parser.addFlag('help', abbr: 'h', help: 'Show help.',
-      callback: (bool isFlagEnabled) {
-    if (isFlagEnabled) {
-      final helpMessage = _generateHelpMessage(parser.usage);
-
-      print(helpMessage);
-
-      dart_io.exit(0);
-    }
-  }, negatable: false);
-
   parser.parse(arguments);
 
   return parsedValues;
@@ -131,7 +135,10 @@ Map<String, dynamic> _parseArgumentsAndBindToActions(List<String> arguments) {
 // When the parsed argument value is null, notify the user and return the default value.
 // [defaultEntityName] is a thing for which we are setting the default value.
 dynamic _notifyUseDefault(String defaultEntityName, dynamic defaultValue) {
-  print('Using the default $defaultEntityName :: $defaultValue');
+  if (!_isHelpFlagEnabled) {
+    print('Using the default $defaultEntityName :: $defaultValue');
+  }
+
   return defaultValue;
 }
 
