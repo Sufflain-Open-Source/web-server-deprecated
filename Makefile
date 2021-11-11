@@ -4,6 +4,9 @@ COMPILED_DIR=compiled
 $(BUILD_DIR)/sflw.exe: $(BUILD_DIR)/sflw
 	mv $(BUILD_DIR)/sflw $(BUILD_DIR)/sflw.exe
 
+docker: $(BUILD_DIR)/sflw
+	docker build -t sufflain-web-server .
+
 $(BUILD_DIR)/sflw: $(BUILD_DIR) web/$(COMPILED_DIR) web/img
 	dart compile exe -o $@ bin/web_server.dart
 
