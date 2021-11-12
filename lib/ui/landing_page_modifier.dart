@@ -15,12 +15,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import '../core/resources.dart' as res;
+
 import 'package:html/parser.dart';
+import 'dart:io';
 
 class LandingPageModifier {
   LandingPageModifier(this._initialHtml);
 
   String _initialHtml;
+  File outputFile = File('${res.publicFolderPath}/index.html');
 
   void appendChild(String html) {
     final document = parse(_initialHtml);
@@ -32,4 +36,6 @@ class LandingPageModifier {
   }
 
   String get outerHtml => _initialHtml;
+
+  void writeToPublicFile() => outputFile.writeAsStringSync(_initialHtml);
 }

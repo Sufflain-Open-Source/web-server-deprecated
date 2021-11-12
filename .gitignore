@@ -7,3 +7,5 @@ pubspec.lock
 build/
 compiled/
 web/img/
+
+web/public/index.html
