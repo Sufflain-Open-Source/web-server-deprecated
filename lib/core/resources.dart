@@ -24,12 +24,13 @@ const publicFolderPath = 'web/public';
 const imagesPath = 'web/img';
 
 Future<String> getIndexHtml() async {
-  final resource = _getResourceForPath(publicFolderPath + '/index.html');
+  final resource = _getResourceForPath('web/index.html');
   return await resource.readAsString(encoding: utf8);
 }
 
 Future<String> getStylesCss() async {
-  final resource = _getResourceForPath(publicFolderPath + '/landing-styles.css');
+  final resource =
+      _getResourceForPath(publicFolderPath + '/landing-styles.css');
   return await resource.readAsString(encoding: utf8);
 }
 
