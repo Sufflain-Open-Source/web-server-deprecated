@@ -63,21 +63,18 @@ void main(List<String> arguments) async {
   });
 
   _bootstrapPage(landingPageModifier);
+  landingPageModifier.writeToPublicFile();
 
-  router.mount(_root + 'landing-styles.css', (request) async {
-    final css = await res.getStylesCss();
-    return shelf.Response.ok(css, headers: {'Content-Type': 'text/css'});
-  });
+  router.mount(_root + res.imagesPath,
+      ShelfVirtualDirectory(res.imagesPath, listDirectory: false).handler);
+
+  router.mount(_appPath,
+      ShelfVirtualDirectory(res.appFolderPath, listDirectory: false).handler);
 
   router.mount(
-      _root + res.imagesPath, ShelfVirtualDirectory(res.imagesPath).handler);
-
-  router.mount(_appPath, ShelfVirtualDirectory(res.appFolderPath).handler);
-
-  router.get(
       _root,
-      (_) => shelf.Response.ok(landingPageModifier.outerHtml,
-          headers: {'Content-Type': 'text/html'}));
+      ShelfVirtualDirectory(res.publicFolderPath, listDirectory: false)
+          .handler);
 
   handler = shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
