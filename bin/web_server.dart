@@ -41,6 +41,7 @@ const _addressKey = 'address';
 const _portKey = 'port';
 
 bool _isHelpFlagEnabled = false;
+bool _isMaintenanceFlagEnabled = false;
 
 void main(List<String> arguments) async {
   final shelf.Handler handler;
@@ -62,19 +63,27 @@ void main(List<String> arguments) async {
     }
   });
 
-  _bootstrapPage(landingPageModifier);
-  landingPageModifier.writeToPublicFile();
+  if (!_isMaintenanceFlagEnabled) {
+    _bootstrapPage(landingPageModifier);
+    landingPageModifier.writeToPublicFile();
 
-  router.mount(_root + res.imagesPath,
-      ShelfVirtualDirectory(res.imagesPath, listDirectory: false).handler);
+    router.mount(_root + res.imagesPath,
+        ShelfVirtualDirectory(res.imagesPath, listDirectory: false).handler);
 
-  router.mount(_appPath,
-      ShelfVirtualDirectory(res.appFolderPath, listDirectory: false).handler);
+    router.mount(_appPath,
+        ShelfVirtualDirectory(res.appFolderPath, listDirectory: false).handler);
 
-  router.mount(
-      _root,
-      ShelfVirtualDirectory(res.publicFolderPath, listDirectory: false)
-          .handler);
+    router.mount(
+        _root,
+        ShelfVirtualDirectory(res.publicFolderPath, listDirectory: false)
+            .handler);
+  } else {
+    router.mount(
+        '/',
+        (_) => shelf.Response.ok(
+            '<h1>Сайт временно недоступен. Проводятся технические работы.</h1>',
+            headers: {'Content-Type': 'text/html'}));
+  }
 
   handler = shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
@@ -98,6 +107,11 @@ void main(List<String> arguments) async {
 Map<String, dynamic> _parseArgumentsAndBindToActions(List<String> arguments) {
   final parsedValues = <String, dynamic>{};
   final parser = ArgParser();
+
+  parser.addFlag('maintenance', abbr: 'm', help: 'Serve the maintenance page.',
+      callback: (bool isFlagEnabled) {
+    _isMaintenanceFlagEnabled = isFlagEnabled;
+  });
 
   parser.addFlag('help', abbr: 'h', help: 'Show help.',
       callback: (bool isFlagEnabled) {
