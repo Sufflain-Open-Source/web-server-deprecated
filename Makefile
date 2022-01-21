@@ -10,8 +10,11 @@ docker: $(BUILD_DIR)/sflw
 $(BUILD_DIR)/sflw: $(BUILD_DIR) web/$(COMPILED_DIR) web/img
 	dart compile exe -o $@ bin/web_server.dart
 
-$(BUILD_DIR):
+$(BUILD_DIR): inject_analytics
 	mkdir $@
+
+inject_analytics:
+	./inject-analytics-config.sh `cat private/aconf`
 
 web/img:
 	mkdir $@
@@ -27,6 +30,8 @@ web/app/build:
 	cd web/app && dart pub get && ./build.sh
 
 clean:
+	./inject-analytics-config.sh restore
+
 	if [ -d "$(BUILD_DIR)" ]; then\
 	 rm -r $(BUILD_DIR) ; \
 	fi

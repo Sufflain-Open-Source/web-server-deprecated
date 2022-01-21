@@ -16,6 +16,7 @@ git clone --recurse-submodules https://gitlab.com/Sufflain/web-server.git
 
 ## Project configuration
 1. Go to the *web/app* directory and follow the client app [instructions](https://gitlab.com/Sufflain/web-client#project-configuration).
+2. Create a "*private*" directory with an "*aconf*" file which contains the Google Analytics config string.
 
 ## Build
 ### Docker
