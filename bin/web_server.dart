@@ -170,7 +170,7 @@ void _bootstrapPage(LandingPageModifier landingPageModifier) {
           subtitle:
               'Расписание разделено по группам.<br>Никакой лишней информации.',
           childElement: _createImageElement(
-              'timetable-25-oct-mobile-edited.png',
+              'timetable-21-jan-2022-mobile-edited.png',
               'Sufflain screenshot: timetable'))
       .outerHtml);
 
