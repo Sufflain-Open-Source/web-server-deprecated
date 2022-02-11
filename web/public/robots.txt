@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+Disallow: /app/
+Sitemap: http://www.sufflain.icu/sitemap.txt
