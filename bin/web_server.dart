@@ -176,7 +176,7 @@ void _bootstrapPage(LandingPageModifier landingPageModifier) {
 
   landingPageModifier.appendChild(InfoCard(
           title: 'Всегда под рукой.',
-          subtitle: 'Разработано с рассчётом на мобильные устройства.',
+          subtitle: 'Разработано с расчётом на мобильные устройства.',
           childElement: _createImageElement(
               'main-mobile.png', 'Sufflain screenshot: main page'))
       .outerHtml);
